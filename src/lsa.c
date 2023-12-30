@@ -24,35 +24,33 @@
 
 #include "lsa.h"
 
-static const int line_sensor_pins[5] = {LSA_A0, LSA_A1, LSA_A2, LSA_A3, LSA_A4};
-
-esp_err_t enable_line_sensor()
+esp_err_t enable_line_sensor(adc_handle_t *adc_handle)
 {
-    esp_err_t err = enable_adc1(line_sensor_pins);
-    return err;
+    ESP_ERROR_CHECK(enable_adc1(adc_handle));
+    return ESP_OK;
 }
 
-line_sensor_array read_line_sensor()
-{
-    line_sensor_array line_sensor_readings;
+// line_sensor_array read_line_sensor(adc_handle_t *adc_handle)
+// {
+//     line_sensor_array line_sensor_readings;
 
-    for (int i = 0; i < 5; i++)
-    {
-        line_sensor_readings.adc_reading[i] = 0;
-    }
+//     for (int i = 0; i < 5; i++)
+//     {
+//         line_sensor_readings.adc_reading[i] = 0;
+//     }
 
-    for (int i = 0; i < NUMBER_OF_SAMPLES; i++)
-    {
-        for (int j = 0; j < 5; j++)
-        {
-            line_sensor_readings.adc_reading[j] = line_sensor_readings.adc_reading[j] + read_adc(line_sensor_pins[j]);
-        }
-    }
+//     for (int i = 0; i < NUMBER_OF_SAMPLES; i++)
+//     {
+//         for (int j = 0; j < 5; j++)
+//         {
+//             line_sensor_readings.adc_reading[j] = line_sensor_readings.adc_reading[j] + read_adc(line_sensor_pins[j]);
+//         }
+//     }
 
-    for (int i = 0; i < 5; i++)
-    {
-        line_sensor_readings.adc_reading[i] = line_sensor_readings.adc_reading[i] / NUMBER_OF_SAMPLES;
-    }
+//     for (int i = 0; i < 5; i++)
+//     {
+//         line_sensor_readings.adc_reading[i] = line_sensor_readings.adc_reading[i] / NUMBER_OF_SAMPLES;
+//     }
 
-    return line_sensor_readings;
-}
+//     return line_sensor_readings;
+// }
