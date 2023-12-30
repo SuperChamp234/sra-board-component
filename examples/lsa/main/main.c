@@ -39,5 +39,14 @@ void app_main(void)
     // enable line sensor
     adc_handle_t adc_handle;
     ESP_ERROR_CHECK(enable_line_sensor(&adc_handle));
-
+    while (1)
+    {
+        line_sensor_array line_sensor_readings = read_line_sensor(adc_handle);
+        for (int i = 0; i < 5; i++)
+        {
+            printf("%d ", line_sensor_readings.adc_reading[i]);
+        }
+        printf("\n");
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
 }

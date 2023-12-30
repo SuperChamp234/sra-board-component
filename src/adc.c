@@ -102,7 +102,7 @@ esp_err_t calib_init(adc_obj_t *adc_obj)
         adc_channel_t channel;
         adc_unit_t unit;
         ESP_ERROR_CHECK(adc_oneshot_io_to_channel(adc_io[i], &unit, &channel));
-        adc_calibration_init(ADC_UNIT_1, channel, ADC_ATTEN, &adc_obj->adc1_cali_handle[i]);
+        adc_obj->do_calib[i] = adc_calibration_init(ADC_UNIT_1, channel, ADC_ATTEN, &adc_obj->adc1_cali_handle[i]);
     }
     return ESP_OK;
 }
@@ -123,4 +123,44 @@ esp_err_t enable_adc1(adc_obj_t** adc_obj)
     *adc_obj = ret;
 
     return ESP_OK;
+}
+
+int read_adc(adc_handle_t adc_handle, int gpio)
+{
+    int adc_reading = 0;
+    int voltage = 0;
+    adc_channel_t channel;
+    adc_unit_t unit;
+    ESP_ERROR_CHECK(adc_oneshot_io_to_channel(gpio, &unit, &channel));
+    ESP_ERROR_CHECK(adc_oneshot_read(adc_handle->adc1_handle, channel, &adc_reading));
+    int arr_loc = 0;
+    switch (gpio)
+    {
+        case LSA_A0:
+            arr_loc = 0;
+            break;
+        case LSA_A1:
+            arr_loc = 1;
+            break;
+        case LSA_A2:
+            arr_loc = 2;
+            break;
+        case LSA_A3:
+            arr_loc = 3;
+            break;
+        case LSA_A4:
+            arr_loc = 4;
+            break;
+        default:
+            break;
+    }
+    if (adc_handle->do_calib[arr_loc])
+    {
+        ESP_ERROR_CHECK(adc_cali_raw_to_voltage(adc_handle->adc1_cali_handle[arr_loc], adc_reading, &voltage));
+        return voltage;
+    }
+    else
+    {
+        return adc_reading;
+    }
 }

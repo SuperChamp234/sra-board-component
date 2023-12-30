@@ -48,6 +48,7 @@ typedef struct
 {
     adc_oneshot_unit_handle_t adc1_handle;
     adc_cali_handle_t adc1_cali_handle[5];
+    bool do_calib[5];
 } adc_obj_t;
 
 typedef adc_obj_t* adc_handle_t;
@@ -58,5 +59,7 @@ typedef adc_obj_t* adc_handle_t;
  * @return esp_err_t - returns ESP_OK if Configuration and Characterization of adc1 is successful, else it returns ESP_ERR_INVALID_ARG.  
  **/
 esp_err_t enable_adc1(adc_obj_t** adc_obj);
+
+int read_adc(adc_handle_t adc_handle, int gpio);
 
 #endif
