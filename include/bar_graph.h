@@ -35,21 +35,13 @@
 #include "pin_defs.h"
 
 /**
- * It will check for state of motor driver A, and accordingly init the free gpios.
- * _________________________
- * | Motor Driver A | Mode |
- * |----------------|------|
- * |     off        |   0  |
- * |     parallel   |   1  |
- * |     normal     |   2  |
- * 
  * enabled_bar_graph_flag is set to the value of Mode accordingly.
  * 
  * @brief enables the bar graph led's gpio pins
- * 
+ * @param motor_driver state of motor driver A, 0 for off, 1 for normal.
  * @return esp_err_t returns ESP_OK if enabled correctly, and ESP_FAIL if it failed to initialise
  */
-esp_err_t enable_bar_graph();
+esp_err_t enable_bar_graph(bool motor_driver);
 
 /**
  * The exact working of this is a bit hard to understand, so this is example. Below are the given states of motor drivers
