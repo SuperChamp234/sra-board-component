@@ -57,13 +57,13 @@
 
 //////// bar graph //////////
 #define BG_LED_1 12
-#define BG_LED_2 33
+#define BG_LED_2 13
 #define BG_LED_3 25
 #define BG_LED_4 26
-#define BG_LED_5 27
-#define BG_LED_6 14
-#define BG_LED_7 13
-#define BG_LED_8 23
+#define BG_LED_5 15
+#define BG_LED_6 5
+#define BG_LED_7 18
+#define BG_LED_8 19
 /////////////////////////////
 
 ////////// switches //////////
@@ -86,7 +86,7 @@
 /////// motor driver ////////
 //****** normal mode ******//
 #define MDA_NORMAL_IN_1 12 //MCPWM_UNIT_1 MCPWM0A
-#define MDA_NORMAL_IN_2 33 //MCPWM_UNIT_1 MCPWM0B
+#define MDA_NORMAL_IN_2 13 //MCPWM_UNIT_1 MCPWM0B
 #define MDA_NORMAL_IN_3 25 //MCPWM_UNIT_1 MCPWM1A
 #define MDA_NORMAL_IN_4 26 //MCPWM_UNIT_1 MCPWM1B
 
