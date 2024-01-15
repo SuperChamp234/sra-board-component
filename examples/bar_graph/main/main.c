@@ -30,7 +30,7 @@
 void app_main(void)
 {
     // enable bar graph modules
-    ESP_ERROR_CHECK(enable_bar_graph(0));
+    ESP_ERROR_CHECK(enable_bar_graph());
 
     // set bool array to 11001100, this will be shown on the bar graph
     bool arr[8] = {true, true, false, false, true, true, false, false};

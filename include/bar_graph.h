@@ -34,6 +34,12 @@
 #include "esp_err.h"
 #include "pin_defs.h"
 
+#if defined CONFIG_MOTOR_DRIVER_OCCUPIED
+    #define MOTOR_DRIVER_OCCUPIED 1
+#else
+    #define MOTOR_DRIVER_OCCUPIED 0
+#endif
+
 /**
  * enabled_bar_graph_flag is set to the value of Mode accordingly.
  * 
@@ -41,7 +47,7 @@
  * @param motor_driver state of motor driver A, 0 for off, 1 for normal.
  * @return esp_err_t returns ESP_OK if enabled correctly, and ESP_FAIL if it failed to initialise
  */
-esp_err_t enable_bar_graph(bool motor_driver);
+esp_err_t enable_bar_graph();
 
 /**
  * The exact working of this is a bit hard to understand, so this is example. Below are the given states of motor drivers

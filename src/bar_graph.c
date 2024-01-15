@@ -36,20 +36,20 @@ static const uint8_t bitmask[3] = {0xFF, 0xCF, 0x0F};
 // Just an array of pins used by bar graph led
 static const int pin_out[8] = {BG_LED_1, BG_LED_2, BG_LED_3, BG_LED_4, BG_LED_5, BG_LED_6, BG_LED_7, BG_LED_8};
 
-esp_err_t enable_bar_graph(bool motor_driver)
+esp_err_t enable_bar_graph()
 {
     uint64_t bit_mask = 0;
     // motor driver a is off so we can use IN1 - IN8 pins
-    if (motor_driver == 0)
+    if (!MOTOR_DRIVER_OCCUPIED)
     {
         bit_mask = (1ULL << BG_LED_1) | (1ULL << BG_LED_2) | (1ULL << BG_LED_3) | (1ULL << BG_LED_4) | (1ULL << BG_LED_5) | (1ULL << BG_LED_6) | (1ULL << BG_LED_7) | (1ULL << BG_LED_8);
         enabled_bar_graph_flag = 0;
     }
     // motor driver a is in normal mode, so we can use IN5, IN6, IN7, IN8 pins
-    else if (motor_driver == 1)
+    else if (MOTOR_DRIVER_OCCUPIED)
     {
         bit_mask = (1ULL << BG_LED_5) | (1ULL << BG_LED_6) | (1ULL << BG_LED_7) | (1ULL << BG_LED_8);
-        enabled_bar_graph_flag = 1;
+        enabled_bar_graph_flag = 0;
     }
 
     gpio_config_t io_conf;

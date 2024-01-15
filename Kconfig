@@ -18,6 +18,12 @@ config I2CDEV_NOLOCK
 
 endmenu
 
+config MOTOR_DRIVER_OCCUPIED
+    bool "Motor Driver Occupied"
+    default y
+    help
+        Motor Driver is in use. Writing the bar graph will be disabled.
+
 config ENABLE_OLED
     bool "Enable OLED"
     default n
