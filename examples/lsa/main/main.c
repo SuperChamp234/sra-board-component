@@ -39,14 +39,22 @@ void app_main(void)
     // enable line sensor
     adc_handle_t adc_handle;
     ESP_ERROR_CHECK(enable_line_sensor(&adc_handle));
+    line_sensor_array line_sensor_readings;
     while (1)
     {
-        line_sensor_array line_sensor_readings = read_line_sensor(adc_handle);
-        for (int i = 0; i < 5; i++)
+        // get line sensor readings
+        line_sensor_readings = read_line_sensor(adc_handle);
+        for(int i = 0; i < 5; i++)
         {
-            printf("%d ", line_sensor_readings.adc_reading[i]);
+            // constrain lsa readings between BLACK_MARGIN and WHITE_MARGIN
+            line_sensor_readings.adc_reading[i] = bound(line_sensor_readings.adc_reading[i], WHITE_MARGIN, BLACK_MARGIN);
+            // map readings from (BLACK_MARGIN, WHITE_MARGIN) to (CONSTRAIN_LSA_LOW, CONSTRAIN_LSA_HIGH)
+            line_sensor_readings.adc_reading[i] = map(line_sensor_readings.adc_reading[i], WHITE_MARGIN, BLACK_MARGIN, CONSTRAIN_LSA_LOW, CONSTRAIN_LSA_HIGH);
+            line_sensor_readings.adc_reading[i] = 1000 - line_sensor_readings.adc_reading[i];
+            vTaskDelay(10);
         }
-        printf("\n");
-        vTaskDelay(100 / portTICK_PERIOD_MS);
+
+        // log final lsa readings
+        ESP_LOGI(TAG, "LSA_0: %d \t LSA_1: %d \t LSA_2: %d \t LSA_3: %d \t LSA_4: %d",line_sensor_readings.adc_reading[0], line_sensor_readings.adc_reading[1], line_sensor_readings.adc_reading[2], line_sensor_readings.adc_reading[3], line_sensor_readings.adc_reading[4]);
     }
 }

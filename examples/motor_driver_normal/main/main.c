@@ -29,17 +29,29 @@
 
 void app_main(void)
 {
-    motor_handle_t motor1;
-    enable_motor_driver(&motor1, MOTOR_A_1);
-    while(1){
-        set_motor_speed(motor1, MOTOR_FORWARD, 60);
-        ESP_LOGI("MOTOR", "Forward");
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        set_motor_speed(motor1, MOTOR_BACKWARD, 60);
-        ESP_LOGI("MOTOR", "Backward");
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        set_motor_speed(motor1, MOTOR_STOP, 0);
-        ESP_LOGI("MOTOR", "Stop");
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        motor_handle_t motor1;
+        enable_motor_driver(&motor1, MOTOR_A_1);
+
+        motor_handle_t motor0;
+        enable_motor_driver(&motor0, MOTOR_A_0);
+
+        int pwm = 0;
+        while(1){
+            pwm = 0;
+            for (int i = 0; i < 4; i++) {
+                pwm += 20;
+                set_motor_speed(motor1, MOTOR_FORWARD, pwm);
+                set_motor_speed(motor0, MOTOR_FORWARD, pwm);
+                ESP_LOGI("MOTOR", "Forward: %d", pwm);
+                vTaskDelay(1000 / portTICK_PERIOD_MS);
+            }
+            pwm = 0;
+            for (int i = 0; i < 4; i++) {
+                pwm += 20;
+                set_motor_speed(motor1, MOTOR_BACKWARD, pwm);
+                set_motor_speed(motor0, MOTOR_BACKWARD, pwm);
+                ESP_LOGI("MOTOR", "Backward: %d", pwm);
+                vTaskDelay(1000 / portTICK_PERIOD_MS);
+            }
+        }
     }
-}
