@@ -25,7 +25,7 @@
 #include "adc.h"
 
 static const char *TAG = "adc";
-static const int adc_io[5] = {LSA_A0, LSA_A1, LSA_A2, LSA_A3, LSA_A4};
+static const int adc_io[6] = {LSA_A0, LSA_A1, LSA_A2, LSA_A3, LSA_A4, BATTERY};
 
 esp_err_t config_adc1(adc_obj_t *adc_obj)
 {
@@ -150,6 +150,9 @@ int read_adc(adc_handle_t adc_handle, int gpio)
             break;
         case LSA_A4:
             arr_loc = 4;
+            break;
+        case BATTERY:
+            arr_loc = 5;
             break;
         default:
             break;

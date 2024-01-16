@@ -69,8 +69,8 @@
 ////////// switches //////////
 #define SWITCH_1 4
 #define SWITCH_2 2
-#define SWITCH_3 17
-#define SWITCH_4 16
+#define SWITCH_3 27
+#define SWITCH_4 14
 /////////////////////////////
 
 /////////// lsa /////////////

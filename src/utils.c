@@ -37,3 +37,15 @@ float map(float val, float input_lower_limit, float input_higher_limit, float ou
 {
     return (output_lower_limit + ((val - input_lower_limit) * ((output_higher_limit - output_lower_limit) / (input_higher_limit - input_lower_limit))));
 }
+
+int battery_percent(adc_handle_t adc)
+{
+    int battery_voltage = 0;
+    int battery_voltage_sum = 0;
+    for (int i = 0; i < NUMBER_OF_SAMPLES; i++)
+    {
+        battery_voltage_sum += read_adc(adc, BATTERY);
+    }
+    battery_voltage = battery_voltage_sum / NUMBER_OF_SAMPLES;
+    return map(battery_voltage, 980, 1120, 0, 100);
+}

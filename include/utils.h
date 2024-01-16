@@ -26,6 +26,7 @@
 #define _UTILS_H
 
 #include "esp_log.h"
+#include "lsa.h"
 
 /**
  * @brief Bound a value in a range [min, max]
@@ -46,5 +47,17 @@ float bound(float val, float min, float max);
  * @param output_higher_limit	input_higher_limit is mapped to output_higher_limit
  */
 float map(float val, float input_lower_limit, float input_higher_limit, float output_lower_limit, float output_higher_limit);
+
+/**
+ * @brief Calculates the battery percentage based on the ADC reading.
+ *
+ * This function takes an ADC handle as input and calculates the battery percentage
+ * based on the ADC reading. The ADC reading is converted to a voltage value and then
+ * mapped to a battery percentage using a predefined mapping table.
+ *
+ * @param adc The ADC handle used for reading the battery voltage.
+ * @return The battery percentage calculated based on the ADC reading.
+ */
+int battery_percent(adc_handle_t adc);
 
 #endif

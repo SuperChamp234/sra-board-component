@@ -34,6 +34,7 @@
 #include <freertos/task.h>
 #include "pin_defs.h"
 #include "lsa.h"
+#include "utils.h"
 
 #ifdef CONFIG_ENABLE_OLED
 #include "lvgl.h"
@@ -105,5 +106,30 @@ esp_err_t display_pid_values(float kp, float ki, float kd);
  * @return esp_err_t i.e it shows if Pitch and Roll values are displayed successfully or not
  **/
 esp_err_t display_servo_values(int s1, int s2, int s3, int s4);
+
+/**
+ * @brief displays battery voltage, kp, ki, kd and lsa readings on OLED
+
+ * @param battery_voltage value of battery voltage in int
+ * @param kp value of kp in float
+ * @param ki value of ki in float
+ * @param kd value of kd in float
+ * @param readings line_sensor_array struct
+
+ * @return esp_err_t i.e it shows if battery voltage, kp, ki, kd and lsa readings are displayed successfully or not
+ **/
+esp_err_t line_following_display(int battery_voltage, float kp, float ki, float kd, line_sensor_array readings);
+
+/**
+ * @brief displays battery percentage, kp, ki, kd on OLED
+
+ * @param battery_percentage value of battery percentage in int
+ * @param kp value of kp in float
+ * @param ki value of ki in float
+ * @param kd value of kd in float
+
+ * @return esp_err_t i.e it shows if battery percentage, kp, ki, kd are displayed successfully or not
+ **/
+esp_err_t self_balancing_display(int battery_percentage, float kp, float ki, float kd);
 
 #endif
